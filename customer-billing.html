@@ -42,6 +42,8 @@
       </div>
       <p style="margin-left: 220px;margin-bottom:4px;color: green;margin-top: -10px;
       margin-left: 205px;" id="agent_found">Agent Found</p>
+      <p style="margin-left: 220px;margin-bottom:4px;color: green;margin-top: -10px;
+      margin-left: 205px;" id="agent_not_found">Agent Not Found</p>
       <div class="form-group">
         <label class="control-label col-sm-2" for="pwd">Amount:</label>
         <div class="col-sm-6">          
@@ -81,6 +83,7 @@
 <script>
     $(document).ready(function() {
     $('#agent_found').hide();
+    $('#agent_not_found').hide();
     $('#if_agent_found').hide();
     $('#agt_pft1').hide();
     $('#agt_pft2').hide();
@@ -98,6 +101,7 @@
     })
     $('#fetch_agent').click(()=> {
         const input = $('#agent_id').val();
+        console.log('ui input ', input);
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/customers/fetchAgent",
@@ -107,17 +111,19 @@
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function( data ) {
-                // console.log('data--->', data);
+                console.log('data--->', data);
                 if(data.agentExist){
                     $('#agent_found').show();
+                    $('#agent_not_found').hide();
                     $('#if_agent_found').show();
                 }else{
                     $('#agent_found').hide();
+                    $('#agent_not_found').show();
                     $('#if_agent_found').hide();
                 }
             },
             error: function( error ) {
-                // console.log('error--->', error)
+                console.log('error--->', error)
             }
         });
     })
